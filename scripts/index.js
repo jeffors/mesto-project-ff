@@ -15,11 +15,12 @@ function addCard(card) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
   cardElement.querySelector(".card__title").textContent = card.name;
+  cardElement.querySelector(".card__image").alt = card.name;
   cardElement.querySelector(".card__image").src = card.link;
 
   cardContainer.append(cardElement);
 }
 
-initialCards.forEach(card => {
-  addCard(card)
+initialCards.forEach((card) => {
+  addCard(card);
 });
