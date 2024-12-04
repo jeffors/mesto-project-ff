@@ -1,13 +1,3 @@
-// @todo: Темплейт карточки
-
-// @todo: DOM узлы
-
-// @todo: Функция создания карточки
-
-// @todo: Функция удаления карточки
-
-// @todo: Вывести карточки на страницу
-
 const cardContainer = document.querySelector(".places__list");
 
 function addCard(card, removeCard) {
@@ -25,7 +15,7 @@ function addCard(card, removeCard) {
 }
 
 function removeCard(evt) {
-  evt.target.parentElement.remove();
+  evt.target.closest(".card").remove();
 }
 
 initialCards.forEach((card) => {
