@@ -17,6 +17,9 @@ function addCard(card) {
   cardElement.querySelector(".card__title").textContent = card.name;
   cardElement.querySelector(".card__image").alt = card.name;
   cardElement.querySelector(".card__image").src = card.link;
+  cardElement.querySelector(".card__delete-button").addEventListener('click', function (evt) {
+    cardElement.remove();
+  })
 
   cardContainer.append(cardElement);
 }
