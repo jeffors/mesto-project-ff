@@ -1,0 +1,25 @@
+{
+  "name": "mesto-project-ff",
+  "version": "1.0.0",
+  "description": "https://github.com/jeffors/mesto-project-ff.git",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffors/mesto-project-ff.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeffors/mesto-project-ff/issues"
+  },
+  "homepage": "https://github.com/jeffors/mesto-project-ff#readme",
+  "devDependencies": {
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  }
+}
