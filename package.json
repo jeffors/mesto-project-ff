@@ -4,7 +4,8 @@
   "description": "https://github.com/jeffors/mesto-project-ff.git",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
