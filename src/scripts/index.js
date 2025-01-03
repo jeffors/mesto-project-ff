@@ -1,3 +1,5 @@
+import { initialCards } from "./cards";
+
 const cardContainer = document.querySelector(".places__list");
 
 function addCard(card, removeCard) {
