@@ -1,4 +1,4 @@
-import '../pages/index.css';
+import "../pages/index.css";
 import { initialCards } from "./cards";
 
 const cardContainer = document.querySelector(".places__list");
@@ -23,4 +23,24 @@ function removeCard(evt) {
 
 initialCards.forEach((card) => {
   cardContainer.append(addCard(card, removeCard));
+});
+
+// TODO: сделать нормальные функции, добавить Esc для закрытия
+const profileAddButton = document.querySelector(".profile__add-button");
+const profileEditButton = document.querySelector(".profile__edit-button");
+const editPopup = document.querySelector(".popup_type_edit");
+const newCardPopup = document.querySelector(".popup_type_new-card");
+
+profileEditButton.addEventListener("click", () => {
+  editPopup.classList.add("popup_is-opened");
+  editPopup.querySelector(".popup__close").addEventListener("click", () => {
+    editPopup.classList.remove("popup_is-opened");
+  });
+});
+
+profileAddButton.addEventListener("click", () => {
+  newCardPopup.classList.add("popup_is-opened");
+  newCardPopup.querySelector(".popup__close").addEventListener("click", () => {
+    newCardPopup.classList.remove("popup_is-opened");
+  });
 });
