@@ -25,22 +25,35 @@ initialCards.forEach((card) => {
   cardContainer.append(addCard(card, removeCard));
 });
 
-// TODO: сделать нормальные функции, добавить Esc для закрытия
+// TODO: сделать закрытие по оверлею
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const editPopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
 
-profileEditButton.addEventListener("click", () => {
-  editPopup.classList.add("popup_is-opened");
-  editPopup.querySelector(".popup__close").addEventListener("click", () => {
-    editPopup.classList.remove("popup_is-opened");
+function keyHandler(evt) {
+  if (evt.key === "Escape") {
+    closeModal(document.querySelector(".popup_is-opened"))
+  }
+}
+
+function openModal(modal) {
+  modal.classList.add("popup_is-opened");
+  document.addEventListener("keydown", keyHandler);
+  modal.querySelector(".popup__close").addEventListener("click", () => {
+    closeModal(modal);
   });
+}
+
+function closeModal(modal) {
+  modal.classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", keyHandler);
+}
+
+profileEditButton.addEventListener("click", () => {
+  openModal(editPopup);
 });
 
 profileAddButton.addEventListener("click", () => {
-  newCardPopup.classList.add("popup_is-opened");
-  newCardPopup.querySelector(".popup__close").addEventListener("click", () => {
-    newCardPopup.classList.remove("popup_is-opened");
-  });
+  openModal(newCardPopup);
 });
