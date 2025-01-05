@@ -25,7 +25,6 @@ initialCards.forEach((card) => {
   cardContainer.append(addCard(card, removeCard));
 });
 
-// TODO: сделать закрытие по оверлею
 const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const editPopup = document.querySelector(".popup_type_edit");
@@ -33,16 +32,23 @@ const newCardPopup = document.querySelector(".popup_type_new-card");
 
 function keyHandler(evt) {
   if (evt.key === "Escape") {
-    closeModal(document.querySelector(".popup_is-opened"))
+    closeModal(document.querySelector(".popup_is-opened"));
+  }
+}
+
+function clickHandler(evt) {
+  if (
+    evt.target.classList.contains("popup_is-opened") ||
+    evt.target.classList.contains("popup__close")
+  ) {
+    closeModal(document.querySelector(".popup_is-opened"));
   }
 }
 
 function openModal(modal) {
   modal.classList.add("popup_is-opened");
+  modal.addEventListener("click", clickHandler);
   document.addEventListener("keydown", keyHandler);
-  modal.querySelector(".popup__close").addEventListener("click", () => {
-    closeModal(modal);
-  });
 }
 
 function closeModal(modal) {
