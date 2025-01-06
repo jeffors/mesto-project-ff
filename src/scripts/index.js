@@ -69,11 +69,22 @@ profileAddButton.addEventListener("click", () => {
   openModal(newCardPopup);
 });
 
-function handleFormSubmit(evt) {
+function handleEditFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.textContent = document.forms.edit_profile.elements.name.value;
-  profileDescription.textContent = document.forms.edit_profile.elements.description.value;
+  profileDescription.textContent =
+    document.forms.edit_profile.elements.description.value;
   closeModal(document.querySelector(".popup_is-opened"));
 }
 
-document.forms.edit_profile.addEventListener('submit', handleFormSubmit); 
+document.forms.edit_profile.addEventListener("submit", handleEditFormSubmit);
+
+function handleAddFormSubmit(evt) {
+  evt.preventDefault();
+  const placeName = document.forms.new_place.elements.place_name.value;
+  const link = document.forms.new_place.elements.link.value;
+  cardContainer.prepend(addCard({ name: placeName, link: link }, removeCard));
+  closeModal(document.querySelector(".popup_is-opened"));
+}
+
+document.forms.new_place.addEventListener("submit", handleAddFormSubmit);
