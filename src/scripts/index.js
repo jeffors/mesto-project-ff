@@ -29,6 +29,8 @@ const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const editPopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
+const profileTitle = document.querySelector(".profile__title");
+const profileDescription = document.querySelector(".profile__description");
 
 function keyHandler(evt) {
   if (evt.key === "Escape") {
@@ -58,6 +60,9 @@ function closeModal(modal) {
 
 profileEditButton.addEventListener("click", () => {
   openModal(editPopup);
+  document.forms.edit_profile.elements.name.value = profileTitle.innerText;
+  document.forms.edit_profile.elements.description.value =
+    profileDescription.innerText;
 });
 
 profileAddButton.addEventListener("click", () => {
