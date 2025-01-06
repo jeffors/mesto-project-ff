@@ -68,3 +68,12 @@ profileEditButton.addEventListener("click", () => {
 profileAddButton.addEventListener("click", () => {
   openModal(newCardPopup);
 });
+
+function handleFormSubmit(evt) {
+  evt.preventDefault();
+  profileTitle.textContent = document.forms.edit_profile.elements.name.value;
+  profileDescription.textContent = document.forms.edit_profile.elements.description.value;
+  closeModal(document.querySelector(".popup_is-opened"));
+}
+
+document.forms.edit_profile.addEventListener('submit', handleFormSubmit); 
