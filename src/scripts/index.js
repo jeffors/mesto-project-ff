@@ -2,8 +2,9 @@ import "../pages/index.css";
 import { initialCards } from "./cards";
 
 const cardContainer = document.querySelector(".places__list");
+const imagePopup = document.querySelector(".popup_type_image");
 
-function addCard(card, removeCard, likeCard) {
+function addCard(card, removeCard, likeCard, openImagePopup) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
@@ -13,9 +14,21 @@ function addCard(card, removeCard, likeCard) {
   cardElement
     .querySelector(".card__delete-button")
     .addEventListener("click", removeCard);
-  cardElement.querySelector(".card__like-button").addEventListener("click", likeCard);
+  cardElement
+    .querySelector(".card__like-button")
+    .addEventListener("click", likeCard);
+  cardElement
+    .querySelector(".card__image")
+    .addEventListener("click", openImagePopup);
 
   return cardElement;
+}
+
+function openImagePopup(evt) {
+  imagePopup.querySelector(".popup__image").src = evt.target.src;
+  imagePopup.querySelector(".popup__image").alt = evt.target.alt;
+  imagePopup.querySelector(".popup__caption").textContent = evt.target.alt;
+  openModal(imagePopup);
 }
 
 function likeCard(evt) {
@@ -27,7 +40,7 @@ function removeCard(evt) {
 }
 
 initialCards.forEach((card) => {
-  cardContainer.append(addCard(card, removeCard, likeCard));
+  cardContainer.append(addCard(card, removeCard, likeCard, openImagePopup));
 });
 
 const profileAddButton = document.querySelector(".profile__add-button");
