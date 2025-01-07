@@ -3,7 +3,7 @@ import { initialCards } from "./cards";
 
 const cardContainer = document.querySelector(".places__list");
 
-function addCard(card, removeCard) {
+function addCard(card, removeCard, likeCard) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
@@ -13,8 +13,13 @@ function addCard(card, removeCard) {
   cardElement
     .querySelector(".card__delete-button")
     .addEventListener("click", removeCard);
+  cardElement.querySelector(".card__like-button").addEventListener("click", likeCard);
 
   return cardElement;
+}
+
+function likeCard(evt) {
+  evt.target.classList.toggle("card__like-button_is-active");
 }
 
 function removeCard(evt) {
@@ -22,7 +27,7 @@ function removeCard(evt) {
 }
 
 initialCards.forEach((card) => {
-  cardContainer.append(addCard(card, removeCard));
+  cardContainer.append(addCard(card, removeCard, likeCard));
 });
 
 const profileAddButton = document.querySelector(".profile__add-button");
