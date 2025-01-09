@@ -1,6 +1,7 @@
 import "../pages/index.css";
 import { initialCards } from "./cards";
 import addCard from "../components/card";
+import { openModal, closeModal } from "../components/modal";
 
 const cardContainer = document.querySelector(".places__list");
 const imagePopup = document.querySelector(".popup_type_image");
@@ -22,32 +23,6 @@ const editPopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
-
-function keyHandler(evt) {
-  if (evt.key === "Escape") {
-    closeModal(document.querySelector(".popup_is-opened"));
-  }
-}
-
-function clickHandler(evt) {
-  if (
-    evt.target.classList.contains("popup_is-opened") ||
-    evt.target.classList.contains("popup__close")
-  ) {
-    closeModal(document.querySelector(".popup_is-opened"));
-  }
-}
-
-function openModal(modal) {
-  modal.classList.add("popup_is-opened");
-  modal.addEventListener("click", clickHandler);
-  document.addEventListener("keydown", keyHandler);
-}
-
-function closeModal(modal) {
-  modal.classList.remove("popup_is-opened");
-  document.removeEventListener("keydown", keyHandler);
-}
 
 profileEditButton.addEventListener("click", () => {
   openModal(editPopup);
