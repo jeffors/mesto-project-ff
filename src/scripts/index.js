@@ -32,6 +32,7 @@ function handleAddFormSubmit(evt) {
   const placeName = document.forms.new_place.elements.place_name.value;
   const link = document.forms.new_place.elements.link.value;
   cardContainer.prepend(addCard({ name: placeName, link: link }, openImagePopup));
+  document.forms.new_place.reset();
   closeModal(document.querySelector(".popup_is-opened"));
 }
 
