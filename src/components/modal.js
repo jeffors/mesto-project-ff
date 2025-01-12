@@ -9,7 +9,7 @@ function clickHandler(evt) {
     evt.target.classList.contains("popup_is-opened") ||
     evt.target.classList.contains("popup__close")
   ) {
-    closeModal(document.querySelector(".popup_is-opened"));
+    closeModal(evt.currentTarget);
   }
 }
 
@@ -21,5 +21,6 @@ export function openModal(modal) {
 
 export function closeModal(modal) {
   modal.classList.remove("popup_is-opened");
+  modal.removeEventListener("click", clickHandler);
   document.removeEventListener("keydown", keyHandler);
 }
