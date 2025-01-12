@@ -34,8 +34,8 @@ function handleAddFormSubmit(evt) {
   cardContainer.prepend(
     createCard(
       { name: placeName, link: link },
-      likeCard,
       removeCard,
+      likeCard,
       openImagePopup
     )
   );
