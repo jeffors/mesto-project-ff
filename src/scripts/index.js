@@ -24,7 +24,7 @@ function handleEditFormSubmit(evt) {
   profileTitle.textContent = document.forms.edit_profile.elements.name.value;
   profileDescription.textContent =
     document.forms.edit_profile.elements.description.value;
-  closeModal(document.querySelector(".popup_is-opened"));
+  closeModal(editPopup);
 }
 
 function handleAddFormSubmit(evt) {
@@ -33,7 +33,7 @@ function handleAddFormSubmit(evt) {
   const link = document.forms.new_place.elements.link.value;
   cardContainer.prepend(addCard({ name: placeName, link: link }, openImagePopup));
   document.forms.new_place.reset();
-  closeModal(document.querySelector(".popup_is-opened"));
+  closeModal(newCardPopup);
 }
 
 initialCards.forEach((card) => {
