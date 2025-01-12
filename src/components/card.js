@@ -1,4 +1,4 @@
-export default function addCard(card, openImagePopup) {
+export function createCard(card, removeCard, likeCard, openImagePopup) {
   const cardTemplate = document.querySelector("#card-template").content;
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
 
@@ -18,10 +18,10 @@ export default function addCard(card, openImagePopup) {
   return cardElement;
 }
 
-function likeCard(evt) {
+export function likeCard(evt) {
   evt.target.classList.toggle("card__like-button_is-active");
 }
 
-function removeCard(evt) {
+export function removeCard(evt) {
   evt.target.closest(".card").remove();
 }

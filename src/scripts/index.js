@@ -1,6 +1,6 @@
 import "../pages/index.css";
 import { initialCards } from "./cards";
-import addCard from "../components/card";
+import { createCard, likeCard, removeCard } from "../components/card";
 import { openModal, closeModal } from "../components/modal";
 
 const cardContainer = document.querySelector(".places__list");
@@ -31,13 +31,20 @@ function handleAddFormSubmit(evt) {
   evt.preventDefault();
   const placeName = document.forms.new_place.elements.place_name.value;
   const link = document.forms.new_place.elements.link.value;
-  cardContainer.prepend(addCard({ name: placeName, link: link }, openImagePopup));
+  cardContainer.prepend(
+    createCard(
+      { name: placeName, link: link },
+      likeCard,
+      removeCard,
+      openImagePopup
+    )
+  );
   document.forms.new_place.reset();
   closeModal(newCardPopup);
 }
 
 initialCards.forEach((card) => {
-  cardContainer.append(addCard(card, openImagePopup));
+  cardContainer.append(createCard(card, removeCard, likeCard, openImagePopup));
 });
 
 profileEditButton.addEventListener("click", () => {
