@@ -81,6 +81,10 @@
               name="place_name"
               class="popup__input popup__input_type_card-name"
               placeholder="Название"
+              minlength="2"
+              maxlength="30"
+              pattern="^[a-zA-Zа-яёА-ЯЁ\s\-]+$"
+              data-error-message="Разрешены только латинские и кириллические буквы, знаки дефиса и пробелы"
               required
             />
             <input
