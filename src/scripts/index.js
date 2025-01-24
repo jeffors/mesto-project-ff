@@ -12,6 +12,10 @@ const newCardPopup = document.querySelector(".popup_type_new-card");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
+const editNameInput = document.forms.edit_profile.elements.name;
+const editNameError =
+  document.forms.edit_profile.querySelector(".edit_name_error");
+
 function openImagePopup(evt) {
   imagePopup.querySelector(".popup__image").src = evt.target.src;
   imagePopup.querySelector(".popup__image").alt = evt.target.alt;
@@ -49,6 +53,7 @@ initialCards.forEach((card) => {
 
 profileEditButton.addEventListener("click", () => {
   openModal(editPopup);
+  hideError(editNameInput);
   document.forms.edit_profile.elements.name.value = profileTitle.innerText;
   document.forms.edit_profile.elements.description.value =
     profileDescription.innerText;
@@ -60,10 +65,6 @@ profileAddButton.addEventListener("click", () => {
 
 document.forms.edit_profile.addEventListener("submit", handleEditFormSubmit);
 document.forms.new_place.addEventListener("submit", handleAddFormSubmit);
-
-const editNameInput = document.forms.edit_profile.elements.name;
-const editNameError =
-  document.forms.edit_profile.querySelector(".edit_name_error");
 
 function showError(input, errorMessage) {
   input.classList.add("popup__input_type_error");
