@@ -60,3 +60,37 @@ profileAddButton.addEventListener("click", () => {
 
 document.forms.edit_profile.addEventListener("submit", handleEditFormSubmit);
 document.forms.new_place.addEventListener("submit", handleAddFormSubmit);
+
+const editNameInput = document.forms.edit_profile.elements.name;
+const editNameError =
+  document.forms.edit_profile.querySelector(".edit_name_error");
+
+function showError(input, errorMessage) {
+  input.classList.add("popup__input_type_error");
+  editNameError.textContent = errorMessage;
+  editNameError.classList.add("popup__input_error_active");
+}
+
+function hideError(input) {
+  input.classList.remove("popup__input_type_error");
+  editNameError.textContent = "";
+  editNameError.classList.remove("popup__input_error_active");
+}
+
+function checkInputValidity() {
+  if (editNameInput.validity.patternMismatch) {
+    editNameInput.setCustomValidity(editNameInput.dataset.errorMessage);
+  } else {
+    editNameInput.setCustomValidity("");
+  }
+
+  if (!editNameInput.validity.valid) {
+    showError(editNameInput, editNameInput.validationMessage);
+  } else {
+    hideError(editNameInput);
+  }
+}
+
+editNameInput.addEventListener("input", () => {
+  checkInputValidity();
+});
