@@ -47,6 +47,7 @@
               type="text"
               name="name"
               class="popup__input popup__input_type_name"
+              id="profile-name-input"
               placeholder="Имя"
               minlength="2"
               maxlength="40"
@@ -54,11 +55,12 @@
               data-error-message="Разрешены только латинские и кириллические буквы, знаки дефиса и пробелы"
               required
             />
-            <span class="popup__input_error edit_name_error"></span>
+            <span class="popup__input_error profile-name-input-error"></span>
             <input
               type="text"
               name="description"
               class="popup__input popup__input_type_description"
+              id="profile-description-input"
               placeholder="Занятие"
               minlength="2"
               maxlength="200"
@@ -66,7 +68,7 @@
               data-error-message="Разрешены только латинские и кириллические буквы, знаки дефиса и пробелы"
               required
             />
-            <span class="popup__input_error"></span>
+            <span class="popup__input_error profile-description-input-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
@@ -82,6 +84,7 @@
               type="text"
               name="place_name"
               class="popup__input popup__input_type_card-name"
+              id="card-name"
               placeholder="Название"
               minlength="2"
               maxlength="30"
@@ -89,15 +92,16 @@
               data-error-message="Разрешены только латинские и кириллические буквы, знаки дефиса и пробелы"
               required
             />
-            <span class="popup__input_error"></span>
+            <span class="popup__input_error card-name-error"></span>
             <input
               type="url"
               name="link"
               class="popup__input popup__input_type_url"
+              id="card-link"
               placeholder="Ссылка на картинку"
               required
             />
-            <span class="popup__input_error"></span>
+            <span class="popup__input_error card-link-error"></span>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>
