@@ -12,10 +12,6 @@ const newCardPopup = document.querySelector(".popup_type_new-card");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
-const editNameInput = document.forms.edit_profile.elements.name;
-const editNameError =
-  document.forms.edit_profile.querySelector(".edit_name_error");
-
 function openImagePopup(evt) {
   imagePopup.querySelector(".popup__image").src = evt.target.src;
   imagePopup.querySelector(".popup__image").alt = evt.target.alt;
@@ -53,45 +49,62 @@ initialCards.forEach((card) => {
 
 profileEditButton.addEventListener("click", () => {
   openModal(editPopup);
-  hideError(editNameInput);
+  // TODO: clearValidation()
   document.forms.edit_profile.elements.name.value = profileTitle.innerText;
   document.forms.edit_profile.elements.description.value =
     profileDescription.innerText;
 });
 
 profileAddButton.addEventListener("click", () => {
+  // TODO: clearValidation()
   openModal(newCardPopup);
 });
 
 document.forms.edit_profile.addEventListener("submit", handleEditFormSubmit);
 document.forms.new_place.addEventListener("submit", handleAddFormSubmit);
 
-function showError(input, errorMessage) {
-  input.classList.add("popup__input_type_error");
-  editNameError.textContent = errorMessage;
-  editNameError.classList.add("popup__input_error_active");
+function showInputError(formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add("popup__input_type_error");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("popup__input_error_active");
 }
 
-function hideError(input) {
-  input.classList.remove("popup__input_type_error");
-  editNameError.textContent = "";
-  editNameError.classList.remove("popup__input_error_active");
+function hideInputError(formElement, inputElement) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove("popup__input_type_error");
+  errorElement.textContent = "";
+  errorElement.classList.remove("popup__input_error_active");
 }
 
-function checkInputValidity() {
-  if (editNameInput.validity.patternMismatch) {
-    editNameInput.setCustomValidity(editNameInput.dataset.errorMessage);
+function checkInputValidity(formElement, inputElement) {
+  if (inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {
-    editNameInput.setCustomValidity("");
+    inputElement.setCustomValidity("");
   }
 
-  if (!editNameInput.validity.valid) {
-    showError(editNameInput, editNameInput.validationMessage);
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
   } else {
-    hideError(editNameInput);
+    hideInputError(formElement, inputElement);
   }
 }
 
-editNameInput.addEventListener("input", () => {
-  checkInputValidity();
-});
+function setEventListeners(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", () => {
+      checkInputValidity(formElement, inputElement);
+    });
+  });
+}
+
+function enableValidation() {
+  const formList = Array.from(document.querySelectorAll(".popup__form"));
+  formList.forEach((formElement) => {
+    setEventListeners(formElement);
+  });
+}
+
+enableValidation();
