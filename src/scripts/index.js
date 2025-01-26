@@ -12,6 +12,12 @@ const newCardPopup = document.querySelector(".popup_type_new-card");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 
+function fillProfileForm() {
+  document.forms.edit_profile.elements.name.value = profileTitle.innerText;
+  document.forms.edit_profile.elements.description.value =
+    profileDescription.innerText;
+}
+
 function openImagePopup(evt) {
   imagePopup.querySelector(".popup__image").src = evt.target.src;
   imagePopup.querySelector(".popup__image").alt = evt.target.alt;
@@ -48,11 +54,9 @@ initialCards.forEach((card) => {
 });
 
 profileEditButton.addEventListener("click", () => {
+  fillProfileForm();
   openModal(editPopup);
   // TODO: clearValidation()
-  document.forms.edit_profile.elements.name.value = profileTitle.innerText;
-  document.forms.edit_profile.elements.description.value =
-    profileDescription.innerText;
 });
 
 profileAddButton.addEventListener("click", () => {
@@ -128,4 +132,5 @@ function enableValidation() {
   });
 }
 
+fillProfileForm();
 enableValidation();
