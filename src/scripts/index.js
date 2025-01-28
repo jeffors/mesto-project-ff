@@ -3,6 +3,7 @@ import { initialCards } from "./cards";
 import { createCard, likeCard, removeCard } from "../components/card";
 import { openModal, closeModal } from "../components/modal";
 import { enableValidation, clearValidation } from "../components/validation";
+import { getInitialCards } from "../components/api";
 
 const cardContainer = document.querySelector(".places__list");
 const imagePopup = document.querySelector(".popup_type_image");
@@ -53,9 +54,9 @@ function handleAddFormSubmit(evt) {
   closeModal(newCardPopup);
 }
 
-initialCards.forEach((card) => {
-  cardContainer.append(createCard(card, removeCard, likeCard, openImagePopup));
-});
+// initialCards.forEach((card) => {
+//   cardContainer.append(createCard(card, removeCard, likeCard, openImagePopup));
+// });
 
 profileEditButton.addEventListener("click", () => {
   document.forms.edit_profile.elements.name.value = profileTitle.innerText;
@@ -74,3 +75,20 @@ document.forms.edit_profile.addEventListener("submit", handleEditFormSubmit);
 document.forms.new_place.addEventListener("submit", handleAddFormSubmit);
 
 enableValidation(validationConfig);
+
+getInitialCards()
+  .then((result) => {
+    result.forEach((card) => {
+      cardContainer.append(
+        createCard(
+          { name: card.name, link: card.link },
+          removeCard,
+          likeCard,
+          openImagePopup
+        )
+      );
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
