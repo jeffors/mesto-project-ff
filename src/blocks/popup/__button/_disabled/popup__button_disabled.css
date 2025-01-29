@@ -6,5 +6,5 @@
 
 .popup__button_disabled:hover {
   background: transparent;
-  cursor: none;
+  cursor: default;
 }
