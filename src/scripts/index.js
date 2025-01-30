@@ -7,6 +7,7 @@ import {
   getInitialCards,
   getProfileInfo,
   setProfileInfo,
+  sendCard
 } from "../components/api";
 
 const cardContainer = document.querySelector(".places__list");
@@ -55,14 +56,19 @@ function handleAddFormSubmit(evt) {
   evt.preventDefault();
   const placeName = document.forms.new_place.elements.place_name.value;
   const link = document.forms.new_place.elements.link.value;
-  cardContainer.prepend(
-    createCard(
-      { name: placeName, link: link },
-      removeCard,
-      likeCard,
-      openImagePopup
-    )
-  );
+  sendCard(placeName, link).then((result) => {
+    cardContainer.prepend(
+      createCard(
+        { name: result.name, link: result.link },
+        removeCard,
+        likeCard,
+        openImagePopup
+      )
+    );
+  }).catch((err) => {
+    console.log(err)
+  })
+  
   document.forms.new_place.reset();
   clearValidation(newCardPopup, validationConfig);
   closeModal(newCardPopup);
