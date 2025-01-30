@@ -1,5 +1,4 @@
 import "../pages/index.css";
-import { initialCards } from "./cards";
 import { createCard, likeCard, removeCard } from "../components/card";
 import { openModal, closeModal } from "../components/modal";
 import { enableValidation, clearValidation } from "../components/validation";
@@ -7,7 +6,7 @@ import {
   getInitialCards,
   getProfileInfo,
   setProfileInfo,
-  sendCard
+  sendCard,
 } from "../components/api";
 
 const cardContainer = document.querySelector(".places__list");
@@ -56,27 +55,25 @@ function handleAddFormSubmit(evt) {
   evt.preventDefault();
   const placeName = document.forms.new_place.elements.place_name.value;
   const link = document.forms.new_place.elements.link.value;
-  sendCard(placeName, link).then((result) => {
-    cardContainer.prepend(
-      createCard(
-        { name: result.name, link: result.link },
-        removeCard,
-        likeCard,
-        openImagePopup
-      )
-    );
-  }).catch((err) => {
-    console.log(err)
-  })
-  
+  sendCard(placeName, link)
+    .then((result) => {
+      cardContainer.prepend(
+        createCard(
+          { name: result.name, link: result.link },
+          removeCard,
+          likeCard,
+          openImagePopup
+        )
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   document.forms.new_place.reset();
   clearValidation(newCardPopup, validationConfig);
   closeModal(newCardPopup);
 }
-
-// initialCards.forEach((card) => {
-//   cardContainer.append(createCard(card, removeCard, likeCard, openImagePopup));
-// });
 
 profileEditButton.addEventListener("click", () => {
   document.forms.edit_profile.elements.name.value = profileTitle.innerText;
@@ -96,19 +93,15 @@ document.forms.new_place.addEventListener("submit", handleAddFormSubmit);
 
 enableValidation(validationConfig);
 
-getProfileInfo()
-  .then((result) => {
-    profileTitle.textContent = result.name;
-    profileDescription.textContent = result.about;
-    profileAvatar.style.backgroundImage = `url("${result.avatar}")`;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+Promise.all([getProfileInfo(), getInitialCards()])
+  .then(([profileInfo, initialCards]) => {
+    profileTitle.textContent = profileInfo.name;
+    profileDescription.textContent = profileInfo.about;
+    profileAvatar.style.backgroundImage = `url("${profileInfo.avatar}")`;
 
-getInitialCards()
-  .then((result) => {
-    result.forEach((card) => {
+    console.log(profileInfo._id); // для работы с карточками пользователя
+
+    initialCards.forEach((card) => {
       cardContainer.append(
         createCard(
           { name: card.name, link: card.link },
