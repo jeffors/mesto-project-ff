@@ -104,7 +104,7 @@ Promise.all([getProfileInfo(), getInitialCards()])
     initialCards.forEach((card) => {
       cardContainer.append(
         createCard(
-          { name: card.name, link: card.link },
+          { name: card.name, link: card.link, likes: card.likes.length },
           removeCard,
           likeCard,
           openImagePopup
