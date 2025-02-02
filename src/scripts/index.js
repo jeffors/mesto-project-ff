@@ -7,6 +7,7 @@ import {
   getProfileInfo,
   setProfileInfo,
   sendCard,
+  updateAvatar
 } from "../components/api";
 
 const cardContainer = document.querySelector(".places__list");
@@ -15,6 +16,7 @@ const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const editPopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
+const avatarPopup = document.querySelector(".popup_type_avatar")
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileAvatar = document.querySelector(".profile__image");
@@ -49,6 +51,22 @@ function handleEditFormSubmit(evt) {
       console.log(err);
     });
   closeModal(editPopup);
+}
+
+function handleAvatarFormSubmit(evt) {
+  evt.preventDefault();
+  updateAvatar(
+    document.forms.avatar.elements.link.value
+  )
+    .then((result) => {
+      profileTitle.textContent = result.name;
+      profileDescription.textContent = result.about;
+      profileAvatar.style.backgroundImage = `url("${result.avatar}")`;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  closeModal(avatarPopup);
 }
 
 function handleAddFormSubmit(evt) {
@@ -88,8 +106,14 @@ profileAddButton.addEventListener("click", () => {
   openModal(newCardPopup);
 });
 
+profileAvatar.addEventListener("click", () => {
+  clearValidation(avatarPopup, validationConfig);
+  openModal(avatarPopup);
+});
+
 document.forms.edit_profile.addEventListener("submit", handleEditFormSubmit);
 document.forms.new_place.addEventListener("submit", handleAddFormSubmit);
+document.forms.avatar.addEventListener("submit", handleAvatarFormSubmit)
 
 enableValidation(validationConfig);
 
