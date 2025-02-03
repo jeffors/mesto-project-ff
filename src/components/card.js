@@ -16,6 +16,11 @@ export function createCard(
   cardElement.querySelector(".card__like-counter").textContent =
     card.likes.length;
 
+    // console.log(card.likes)
+  if (card.likes.find(user => user._id === profileId)) {
+    cardElement.querySelector(".card__like-button").classList.add("card__like-button_is-active")
+  }
+
   if (card.owner._id === profileId) {
     cardElement
       .querySelector(".card__delete-button")
