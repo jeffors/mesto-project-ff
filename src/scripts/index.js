@@ -7,7 +7,7 @@ import {
   getProfileInfo,
   setProfileInfo,
   sendCard,
-  updateAvatar
+  updateAvatar,
 } from "../components/api";
 
 const cardContainer = document.querySelector(".places__list");
@@ -16,7 +16,7 @@ const profileAddButton = document.querySelector(".profile__add-button");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const editPopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
-const avatarPopup = document.querySelector(".popup_type_avatar")
+const avatarPopup = document.querySelector(".popup_type_avatar");
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
 const profileAvatar = document.querySelector(".profile__image");
@@ -37,8 +37,19 @@ function openImagePopup(evt) {
   openModal(imagePopup);
 }
 
+function savingStatus(buttonElement, saving) {
+  if (saving) {
+    buttonElement.textContent = "Сохранение...";
+    buttonElement.disabled;
+  } else {
+    buttonElement.textContent = "Сохранить";
+    buttonElement.enabled;
+  }
+}
+
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
+  savingStatus(editPopup.querySelector(".popup__button"), true);
   setProfileInfo(
     document.forms.edit_profile.elements.name.value,
     document.forms.edit_profile.elements.description.value
@@ -47,52 +58,55 @@ function handleEditFormSubmit(evt) {
       profileTitle.textContent = result.name;
       profileDescription.textContent = result.about;
       profileAvatar.style.backgroundImage = `url("${result.avatar}")`;
+      closeModal(editPopup);
     })
     .catch((err) => {
       console.log(err);
-    });
-  closeModal(editPopup);
+    })
+    .finally(() =>
+      savingStatus(editPopup.querySelector(".popup__button"), false)
+    );
 }
 
 function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
-  updateAvatar(
-    document.forms.avatar.elements.link.value
-  )
+  savingStatus(avatarPopup.querySelector(".popup__button"), true);
+  updateAvatar(document.forms.avatar.elements.link.value)
     .then((result) => {
       profileTitle.textContent = result.name;
       profileDescription.textContent = result.about;
       profileAvatar.style.backgroundImage = `url("${result.avatar}")`;
+      closeModal(avatarPopup);
     })
     .catch((err) => {
       console.log(err);
-    });
-  closeModal(avatarPopup);
+    })
+    .finally(() =>
+      savingStatus(avatarPopup.querySelector(".popup__button"), false)
+    );
 }
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
+  savingStatus(newCardPopup.querySelector(".popup__button"), true);
   const placeName = document.forms.new_place.elements.place_name.value;
   const link = document.forms.new_place.elements.link.value;
   sendCard(placeName, link)
     .then((result) => {
       cardContainer.prepend(
-        createCard(
-          result,
-          profileId,
-          removeCard,
-          likeCard,
-          openImagePopup
-        )
+        createCard(result, profileId, removeCard, likeCard, openImagePopup)
       );
+      closeModal(newCardPopup);
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() =>
+      savingStatus(newCardPopup.querySelector(".popup__button"), false)
+    );
 
   document.forms.new_place.reset();
   clearValidation(newCardPopup, validationConfig);
-  closeModal(newCardPopup);
 }
 
 profileEditButton.addEventListener("click", () => {
@@ -115,7 +129,7 @@ profileAvatar.addEventListener("click", () => {
 
 document.forms.edit_profile.addEventListener("submit", handleEditFormSubmit);
 document.forms.new_place.addEventListener("submit", handleAddFormSubmit);
-document.forms.avatar.addEventListener("submit", handleAvatarFormSubmit)
+document.forms.avatar.addEventListener("submit", handleAvatarFormSubmit);
 
 enableValidation(validationConfig);
 
@@ -129,13 +143,7 @@ Promise.all([getProfileInfo(), getInitialCards()])
 
     initialCards.forEach((card) => {
       cardContainer.append(
-        createCard(
-          card,
-          profileId,
-          removeCard,
-          likeCard,
-          openImagePopup
-        )
+        createCard(card, profileId, removeCard, likeCard, openImagePopup)
       );
     });
   })
