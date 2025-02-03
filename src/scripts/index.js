@@ -28,6 +28,7 @@ const validationConfig = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__input_error_active",
 };
+let profileId;
 
 function openImagePopup(evt) {
   imagePopup.querySelector(".popup__image").src = evt.target.src;
@@ -77,7 +78,8 @@ function handleAddFormSubmit(evt) {
     .then((result) => {
       cardContainer.prepend(
         createCard(
-          { name: result.name, link: result.link },
+          result,
+          profileId,
           removeCard,
           likeCard,
           openImagePopup
@@ -123,12 +125,13 @@ Promise.all([getProfileInfo(), getInitialCards()])
     profileDescription.textContent = profileInfo.about;
     profileAvatar.style.backgroundImage = `url("${profileInfo.avatar}")`;
 
-    console.log(profileInfo._id); // для работы с карточками пользователя
+    profileId = profileInfo._id;
 
     initialCards.forEach((card) => {
       cardContainer.append(
         createCard(
-          { name: card.name, link: card.link, likes: card.likes.length },
+          card,
+          profileId,
           removeCard,
           likeCard,
           openImagePopup
